@@ -5,21 +5,31 @@ use strict;
 use warnings;
 use Data::Dumper;
 use URI::URL;
+use Cwd 'abs_path';
+use File::Basename;
 use File::Path qw(make_path); #let's maek easier path yo!
 
 my $url = new URI::URL shift;
 my @a = split /\//, $url->path;
 my $outdir = $url->host; #base dir output is host of site
 my $file = $a[$#a]; #file name 
+$file = "index" if !defined $file;
+
 my $ipath = join("/", @a[0 .. $#a-1]); 
-say "file = $file";
 
 my $fname = "$file.pdf";
-
-say "capturing $url as $fname";
-system "phantomjs js/rasterize.js $url $fname";
+my $script = abs_path($0);
+my ($name, $spath, $suffix) = fileparse($script);
+my $jspath = "$spath/js";
+system "phantomjs \"$jspath/rasterize.js\" $url $fname";
 my $path = "$outdir/$ipath";
 make_path $path if !-d $path;
 rename $fname, "$path/$fname";
-say "output to $path/$fname";
+if(-f "$path/$fname") {
+	print "$path/$fname";
+	exit 0;
+} else {
+	print "-99";
+	exit 1;
+}
 
