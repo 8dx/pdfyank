@@ -1,0 +1,27 @@
+<div id="page">
+      <div id="sidebar">
+        <ul id="sidebar-items">
+        </ul>
+      </div>
+      <div id="content">
+        <div id="header">
+		<h2>pdfyank</h2>
+        </div>
+	<div id='main'>
+		wanna have a bunch of pages as one pdf?<br />
+		gotchu fam, fill out dis form, get pdf!<br /><br />
+		(note: just provide <em>one</em> url <strong>per line</strong>)
+<hr />
+		<form method="post" action="/yank">
+			<label for="urls">URL List:</label>
+			<textarea name="urls" id="urls">
+			</textarea>
+			<input type='submit' value='do it to it' />
+		</form>
+
+		<div id="conn-status">-99</div>
+		server messages
+		<div id="messages"></div>
+        </div>
+      </div>
+    </div>
